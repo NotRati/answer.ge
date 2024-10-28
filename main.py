@@ -95,11 +95,11 @@ class Account:
         
             self.headerCount = len(temp)
             self.headers = temp[index]
-    def makeAccount(self, amount=10):
+    def makeAccounts(self, amount=10):
         for i in range(amount):
-            account = Account('header.json')
-            account.makeNewAccount()
-            account.saveHeaders()
+            self.makeNewAccount()
+            self.saveHeaders()
+            print("account made")
     def postComment(self, questionId, text, amount=50, useEveryHeader=False):
         for i in range(amount):
             if useEveryHeader:
@@ -134,7 +134,7 @@ class Account:
 
             response = requests.post('https://answers.ambebi.ge/api/integration/notification/', headers=self.headers, files=files)
     def spamMainPage(self, text, amount=50):
-        response = requests.get('https://answers.ambebi.ge/service/api/question/?count=15&skip=0', headers=self.headers)
+        response = requests.get('https://answers.ambebi.ge/service/api/question/?count=50&skip=15', headers=self.headers)
         questionIds = []
         if not response.ok:
             return
@@ -153,4 +153,4 @@ class Account:
 
 account = Account('header.json')
 account.getHeaders()
-account.spamMainPage('kukuniebi')
+print(account.headerCount)
