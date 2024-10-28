@@ -5,7 +5,7 @@ import random
 import re
 from urllib.parse import urlparse, parse_qs
 import json
-from bs4 import BeautifulSoup
+import time
 class Account:
     def __init__(self, fileName):
         self.headerCount = None
@@ -101,6 +101,7 @@ class Account:
             self.saveHeaders()
             print("account made")
     def postComment(self, questionId, text, amount=50, useEveryHeader=False):
+        start_time = time.time()
         for i in range(amount):
             if useEveryHeader:
                 for j in range(self.headerCount):
@@ -122,6 +123,7 @@ class Account:
                 }
 
                 response = requests.post('https://answers.ambebi.ge/api/answer/',headers=self.headers, files=files)
+        print(f"{time.time() - start_time:.2f}")
     def notificationExplode(self, amount, userId, text, sender, image='https://ht-cdn2.adtng.com/a7/creatives/221/1559/818227/1118580/1118580_banner.png'):
         for i in range(amount):
             files = {
@@ -153,4 +155,4 @@ class Account:
 
 account = Account('header.json')
 account.getHeaders()
-print(account.headerCount)
+account.postComment(1003931, 'test', 50, False)
